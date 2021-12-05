@@ -1,12 +1,12 @@
 import './styles/App.css';
-import './components/BasketCount';
 import BasketCount from './components/BasketCount';
+import React from "react";
 
 function App() {
   return (
     <div className="App">
       <header className="App-header">
-       <BasketCount/>  
+       <BasketCount basketCount={10}/>  
        <p>
           Edit <code>src/App.js</code> and save to reload.
         </p>
