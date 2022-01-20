@@ -12,17 +12,17 @@ import React from "react";
 import PropTypes from "prop-types";
 import Product from "./Product";
 
-const ProductList = ({ media, ...props }) => {
+const ProductList = ({ item, ...props }) => {
   return (
     <div className="list">
       <div>
-        {props.stored === "Media library" && <h2>Suggested Media</h2>}
-        {media.length === 0 ? (
-          <div className="empty">No items found...</div>
+        {props.item === "Media library" && <h2>Suggested Media</h2>} 
+        {item.length === 0 ? (
+          <div className="empty"> No items found...</div>
         ) : (
-          media
-            .filter((item) => props.stored === "media" || !item.inBasket)
-            .map((media) => <Product key={media.trackId} media={media} {...props} />)
+          item
+            .filter((item) => props.item === "media" || !item.inBasket)
+            .map((item) => <Product key={props.item.trackId} item={item} {...props} />)
         )}
       </div>
     </div>
@@ -30,7 +30,7 @@ const ProductList = ({ media, ...props }) => {
 };
 
 ProductList.propTypes = {
-  media: PropTypes.array.isRequired,
+  item: PropTypes.array.isRequired,
 };
 
 export default ProductList;

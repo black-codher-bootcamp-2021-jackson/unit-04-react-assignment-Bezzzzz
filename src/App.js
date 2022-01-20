@@ -22,40 +22,40 @@ import data from "./models/data.json";
 
 const App = () => {
    const [count, setCount] = useState([]);
-   const [media, setMedia] = useState(data);
+   const [item, setItem] = useState(data);
+   const [basket, setBasket]= useState([]);
  
 
-  const findMedia = async (value) => {
+  const findItem = async (value) => {
     const url = `https://itunes.apple.com/search?term=${value}&limit=50&explicit=yes`;
 
     const results = await fetch(url).then((res) => res.json()); //res is short for result
     if (!results.error) {
-      setMedia(results.items);
+      setItem(results.items);
       console.log(results.items);
       
     }
   };
 
   const addToBasket = (id) => {
-    setCount(count.concat(media.filter((media) => media.trackId === id)));
-    setMedia([
-      ...media.map((media) => {
-        if (media.trackId === id) {
-          media.read = true;
+    setCount(count.concat(item.filter((item) => item.trackId === id)));
+    setItem([
+      ...item.map((item) => {
+        if (item.trackId === id) {
+          item.read = true;
         }
-        return media;
+        return item;
       }),
     ]);
   };
 
   const removeFromBasket = (id) => {
-    setCount(count.filter((media) => media.trackId !== id));
-    setMedia([
-      ...media.map((media) => {
-        if (media.trackId === id) {
-          media.read = false;
+    setCount(count.filter((item) => item.trackId !== id));
+    setItem([...item.map((item) => {
+        if (item.trackId === id) {
+          item.read = false;
         }
-        return media;
+        return item;
       }),
     ]);
   };
@@ -76,8 +76,8 @@ const App = () => {
           render={() => (
             <Fragment>
               <Header basketCount={count.length} />
-              <Search findMedia={findMedia} />
-              {/* <ProductList media={media} addToBasket={addToBasket} removeFromBasket={removeFromBasket}/> */}
+              <Search findItem={findItem} />
+              {/* <ProductList item={item} addToBasket={addToBasket} removeFromBasket={removeFromBasket}/> */}
             </Fragment>
           )}
         />
