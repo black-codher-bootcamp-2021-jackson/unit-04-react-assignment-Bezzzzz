@@ -18,25 +18,30 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 
-const Product = ({props}) => {
+const Product = ({item, ...props}) => {
     //const {trackId, trackName, trackPrice, artworkUrl100, longDescription} = item; 
     
     return (
-        <div className={"product"+props.kind} id={props.id}>   
-        <img src= {props.thumbnail} alt={props.name}/>
+        <div className={"product"+ item.kind} id={item.id}>   
+         <img src= {item.artworkUrl100} alt={item.artistName}/>
         <div className="product details">
-            <h2>{props.name}
-            {props.name.length > 50 ? props.name.substring(0,50) + "..." : props.name}
+            <h2>{item.artistName}
+            {item.artistName.length > 50 ? item.artistName.substring(0,50) + "..." : item.artistName}
             </h2>
             <p className="product description">
-                {props.longDescription
-                ? props.longDescription.substring(0,60) + "..."
+                {item.longDescription
+                ? item.longDescription.substring(0,60) + "..."
                 : "No description found"}
             </p>
             <p className="product price">
-                {props.price ? "£" + props.price : "No Price Found"}</p>
+                {item.trackPrice ? "£" + item.trackPrice : "No Price Found"}</p>
         </div>
-        {props.stored === "media" ? (
+        <button
+             className="Add-button"
+             onClick={() => props.addToBasket(item)}>
+                 Add to Basket
+                 </button>
+       {/* {props.stored === "media" ? (
             <button
              className="Add-button"
              onClick={() => props.addToBasket(props.id)}>
@@ -48,7 +53,7 @@ const Product = ({props}) => {
             onClick={() => props.removeFromBasket(props.id)}>
                 Remove from Basket
                 </button>    
-        )}
+        )} */}
             </div>
         
     );

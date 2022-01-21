@@ -14,60 +14,57 @@ import Header from "./components/Header";
 import Basket from "./components/Basket";
 import BasketCount from "./components/BasketCount";
 import BasketTotal from "./components/BasketTotal";
-import Product from "./components/Product";
 import ProductList from "./components/ProductList";
 import Search from "./components/Search";
 import About from "./pages/About";
 import data from "./models/data.json";
 
 const App = () => {
-   const [count, setCount] = useState([]);
-   const [item, setItem] = useState(data);
+  
+   const [item, setItem] = useState(data.results);
    const [basket, setBasket]= useState([]);
  
 
   const findItem = async (value) => {
     const url = `https://itunes.apple.com/search?term=${value}&limit=50&explicit=yes`;
 
-    const results = await fetch(url).then((res) => res.json()); //res is short for result
-    if (!results.error) {
-      setItem(results.items);
-      console.log(results.items);
+    const data = await fetch(url).then((res) => res.json()); //res is short for result
+    if (!data.error) {
+      console.log("find:", data.results);
+      setItem(data.results);
+      
       
     }
   };
 
-  const addToBasket = (id) => {
-    setCount(count.concat(item.filter((item) => item.trackId === id)));
-    setItem([
-      ...item.map((item) => {
-        if (item.trackId === id) {
-          item.read = true;
-        }
-        return item;
-      }),
-    ]);
+  const addToBasket = (track) => {
+    setBasket((prevState)=> {
+      return [
+        ...prevState, track
+      ]
+    })
+
   };
 
-  const removeFromBasket = (id) => {
-    setCount(count.filter((item) => item.trackId !== id));
-    setItem([...item.map((item) => {
-        if (item.trackId === id) {
-          item.read = false;
-        }
-        return item;
-      }),
-    ]);
+  const removeFromBasket = (id) => { //use filter to remove the array
+    // setCount(count.filter((item) => item.trackId !== id));
+    // setItem([...item.map((item) => {
+    //     if (item.trackId === id) {
+    //       item.read = false;
+    //     }
+    //     return item;
+    //   }),
+    // ]);
   };
  
 
   useEffect(() => {
-    document.title = `My Library ${count.length} Media`;
+    document.title = `My Library ${basket.length} Media`;
     Array.from(document.getElementsByClassName("basketLink")).forEach((el) => {
-      el.innerText = ` Mediaa (${count.length})`;
+      el.innerText = ` Media (${basket.length})`;
     });
    
-  },[]);
+  },[basket]);
   return (
     <Router>
       <div className="container">
@@ -75,24 +72,33 @@ const App = () => {
           exact path="/"
           render={() => (
             <Fragment>
-              <Header basketCount={count.length} />
+              <Header basketCount={basket.length} />
               <Search findItem={findItem} />
-              {/* <ProductList item={item} addToBasket={addToBasket} removeFromBasket={removeFromBasket}/> */}
+              <ProductList
+                  items={item}
+                  stored="Media library"
+                  addToBasket={addToBasket} 
+                  removeFromBasket={removeFromBasket}/>
             </Fragment>
           )}
         />
         <Route
-          path="/Your Basket"
+          path="/basket"
           render={() => (
             <Fragment>
-              <Header basketCount ={count} />
-              {/* <Basket basket={basket} basketCount={count} BasketTotal={total} addToBasket={addToBasket} removeFromBasket={removeFromBasket}/> */}
+              <Header basketCount ={basket.length} />
+              <ProductList
+                  items={basket}
+                  stored="media"
+                  addToBasket={addToBasket} 
+                  removeFromBasket={removeFromBasket}/>
+             
             </Fragment>
           )}
         />
         <Route
           path="/about"
-          component={() => <About basketCount={count.length} />} />
+          component={() => <About basketCount={basket.length} />} />
       </div>
     </Router>
   );

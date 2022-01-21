@@ -9,18 +9,15 @@
 
 
 import React, { useState } from "react";
-
+//this needs doing 
 const Search = (props) => {
   const [keyword, setKeyword] = useState("");
   const handleSubmit = (event) => {
     event.preventDefault();
-    //props.findBooks(keyword);
+    props.findItem(keyword);
   };
   
   const search = () => {} 
-  
-  
-  
   return (
     <div>
       <form id="searchAPI" onSubmit={(e) => handleSubmit(e)}>
