@@ -41,6 +41,13 @@ const Product = ({item, ...props}) => {
              onClick={() => props.addToBasket(item)}>
                  Add to Basket
                  </button>
+        <button
+            className="Remove-button"
+            onClick={() => props.removeFromBasket(item)}>
+                Remove
+                </button>    
+
+                
        {/* {props.stored === "media" ? (
             <button
              className="Add-button"

@@ -46,16 +46,26 @@ const App = () => {
 
   };
 
-  const removeFromBasket = (id) => { //use filter to remove the array
-    // setCount(count.filter((item) => item.trackId !== id));
-    // setItem([...item.map((item) => {
-    //     if (item.trackId === id) {
-    //       item.read = false;
-    //     }
-    //     return item;
-    //   }),
-    // ]);
+  const removeFromBasket = (track) => {
+    setBasket((prevState)=> {
+      return [
+        ...prevState, track
+      ]
+    })
+
   };
+
+
+  // const removeFromBasket = (track) => { //use filter to remove the array
+  //   // setBasket(basket.filter((item) => item.trackId !== id));
+  //   // setItem([...item.map((item) => {
+  //   //     if (item.trackId === id) {
+  //   //       item.read = false;
+  //   //     }
+  //   //     return item;
+  //   //   }),
+  //   // ]);
+  // };
  
 
   useEffect(() => {
@@ -78,7 +88,8 @@ const App = () => {
                   items={item}
                   stored="Media library"
                   addToBasket={addToBasket} 
-                  removeFromBasket={removeFromBasket}/>
+                   removeFromBasket={removeFromBasket}
+                  />
             </Fragment>
           )}
         />
@@ -90,8 +101,9 @@ const App = () => {
               <ProductList
                   items={basket}
                   stored="media"
-                  addToBasket={addToBasket} 
-                  removeFromBasket={removeFromBasket}/>
+                    removeFromBasket={removeFromBasket}
+                     addToBasket={addToBasket} 
+                />
              
             </Fragment>
           )}
