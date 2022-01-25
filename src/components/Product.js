@@ -25,12 +25,12 @@ const Product = ({item, ...props}) => {
         <div className={"product"+ item.kind} id={item.id}>   
          <img src= {item.artworkUrl100} alt={item.artistName}/>
         <div className="product details">
-            <h2>{item.artistName}
+            <h2>  
             {item.artistName.length > 50 ? item.artistName.substring(0,50) + "..." : item.artistName}
             </h2>
             <p className="product description">
                 {item.longDescription
-                ? item.longDescription.substring(0,60) + "..."
+                ? item.longDescription.substring(0,2000) + "..."
                 : "No description found"}
             </p>
             <p className="product price">
@@ -43,11 +43,11 @@ const Product = ({item, ...props}) => {
                  </button>
         <button
             className="Remove-button"
-            onClick={() => props.removeFromBasket(item)}>
+            onClick={() => props.removeFromBasket(item.trackId)}>
                 Remove
                 </button>    
 
-                
+
        {/* {props.stored === "media" ? (
             <button
              className="Add-button"

@@ -46,26 +46,26 @@ const App = () => {
 
   };
 
-  const removeFromBasket = (track) => {
-    setBasket((prevState)=> {
-      return [
-        ...prevState, track
-      ]
-    })
+  // const removeFromBasket = (track) => {
+  //   setBasket((prevState)=> {
+  //     return [
+  //       item.trackId !== track
+  //     ]
+  //   })
 
-  };
-
-
-  // const removeFromBasket = (track) => { //use filter to remove the array
-  //   // setBasket(basket.filter((item) => item.trackId !== id));
-  //   // setItem([...item.map((item) => {
-  //   //     if (item.trackId === id) {
-  //   //       item.read = false;
-  //   //     }
-  //   //     return item;
-  //   //   }),
-  //   // ]);
   // };
+  
+//use filter to remove the array
+  const removeFromBasket = (track) => { 
+    setBasket(basket.filter(item => item.trackId !== track));
+    setItem([...item.map(item => {
+        if (item.trackId === track) {
+          item.inBasket = false;
+        }
+        return item;
+      }
+     )]);
+    }
  
 
   useEffect(() => {
@@ -102,7 +102,7 @@ const App = () => {
                   items={basket}
                   stored="media"
                     removeFromBasket={removeFromBasket}
-                     addToBasket={addToBasket} 
+                      addToBasket={addToBasket} 
                 />
              
             </Fragment>
